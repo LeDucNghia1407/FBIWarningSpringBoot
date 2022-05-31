@@ -10,5 +10,7 @@ Creating Logical and Database for the course Programming Exercise 2022 - Prof. H
 **RECOMMENDED**
 - First Install database - DROP DATABASE SCHEMA AND RUN SCRIPT TO CREATE TABLE AND INSERT DEMO DATA
 - Then Fix the code
+- Youtube Link tutorials - làm theo hướng dẫn 
 
+ref: https://youtu.be/UMePnyjr6FM
 Deadline 16/06/2022
