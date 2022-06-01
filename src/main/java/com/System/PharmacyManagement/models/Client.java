@@ -1,11 +1,13 @@
 package com.System.PharmacyManagement.models;
 
 import javax.persistence.*;
-
+//Plain Object Java Object = POJO
 @Entity
 public class Client {
-	@javax.persistence.Id
+
+	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//This is "primary key"
 	private Long id;
 	private String clientID;
 	private String employeeID;
@@ -14,6 +16,7 @@ public class Client {
 	}
 
 	public Client(String clientID, String employeeID) {
+		this.id = id;
 		this.clientID = clientID;
 		this.employeeID = employeeID;
 	}
