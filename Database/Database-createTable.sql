@@ -18,75 +18,73 @@ CREATE SCHEMA IF NOT EXISTS `basicorder1` DEFAULT CHARACTER SET utf8mb4 COLLATE 
 USE `basicorder1` ;
 
 -- -----------------------------------------------------
--- Table `basicorder1`.`drug supplier`
+-- Table `basicorder1`.`drugsupplier`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `basicorder1`.`drug supplier` (
-  `Drug Supplier ID` VARCHAR(10) NOT NULL,
-  `Name` VARCHAR(20) NOT NULL,
-  `Address` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Drug Supplier ID`))
+CREATE TABLE IF NOT EXISTS `basicorder1`.`drugsupplier` (
+  `drugSupplierID` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`drugSupplierID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `basicorder1`.`drug store`
+-- Table `basicorder1`.`drugstore`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `basicorder1`.`drug store` (
-  `Drug Store ID` VARCHAR(10) NOT NULL,
-  `Drug Supplier ID` VARCHAR(10) NOT NULL,
-  `Name` VARCHAR(20) NOT NULL,
-  `Address` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Drug Store ID`),
-  INDEX `fk_Drug Store_Drug Supplier1_idx` (`Drug Supplier ID` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `basicorder1`.`drugstore` (
+  `drugStoreID` VARCHAR(10) NOT NULL,
+  `drugSupplierID` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`drugStoreID`),
+  INDEX `fk_Drug Store_Drug Supplier1_idx` (`drugSupplierID` ASC) VISIBLE,
   CONSTRAINT `fk_Drug Store_Drug Supplier1`
-    FOREIGN KEY (`Drug Supplier ID`)
-    REFERENCES `basicorder1`.`drug supplier` (`Drug Supplier ID`))
+    FOREIGN KEY (`drugSupplierID`)
+    REFERENCES `basicorder1`.`drugsupplier` (`drugSupplierID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `basicorder1`.`Manager`
+-- Table `basicorder1`.`manager`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `basicorder1`.`Manager` (
-  `Manager ID` VARCHAR(45) NOT NULL,
-  `Drug Store ID` VARCHAR(10) NOT NULL,
-  INDEX `fk_table1_drug store1_idx` (`Drug Store ID` ASC) VISIBLE,
-  PRIMARY KEY (`Manager ID`),
+CREATE TABLE IF NOT EXISTS `basicorder1`.`manager` (
+  `managerID` VARCHAR(45) NOT NULL,
+  `drugStoreID` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`managerID`),
+  INDEX `fk_table1_drug store1_idx` (`drugStoreID` ASC) VISIBLE,
   CONSTRAINT `fk_table1_drug store1`
-    FOREIGN KEY (`Drug Store ID`)
-    REFERENCES `basicorder1`.`drug store` (`Drug Store ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    FOREIGN KEY (`drugStoreID`)
+    REFERENCES `basicorder1`.`drugstore` (`drugStoreID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
 -- Table `basicorder1`.`employee`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `basicorder1`.`employee` (
-  `Employee ID` VARCHAR(10) NOT NULL,
-  `Drug Store ID` VARCHAR(10) NOT NULL,
-  `Manager ID` VARCHAR(45) NULL,
-  `Name` VARCHAR(20) NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
-  `Phone` VARCHAR(20) NOT NULL,
-  `Permission` INT NOT NULL,
-  `Salary` INT NOT NULL,
-  PRIMARY KEY (`Employee ID`),
-  INDEX `fk_Employee_Drug Store1_idx` (`Drug Store ID` ASC) VISIBLE,
-  INDEX `fk_employee_Manager1_idx` (`Manager ID` ASC) VISIBLE,
+  `employeeID` VARCHAR(10) NOT NULL,
+  `drugStoreID` VARCHAR(10) NOT NULL,
+  `managerBy` VARCHAR(10) NULL DEFAULT NULL,
+  `name` VARCHAR(20) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `permission` INT NOT NULL,
+  `salary` INT NOT NULL,
+  PRIMARY KEY (`employeeID`),
+  INDEX `fk_Employee_Drug Store1_idx` (`drugStoreID` ASC) VISIBLE,
+  INDEX `fk_employee_Manager1_idx` (`managerBy` ASC) VISIBLE,
   CONSTRAINT `fk_Employee_Drug Store1`
-    FOREIGN KEY (`Drug Store ID`)
-    REFERENCES `basicorder1`.`drug store` (`Drug Store ID`),
+    FOREIGN KEY (`drugStoreID`)
+    REFERENCES `basicorder1`.`drugstore` (`drugStoreID`),
   CONSTRAINT `fk_employee_Manager1`
-    FOREIGN KEY (`Manager ID`)
-    REFERENCES `basicorder1`.`Manager` (`Manager ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    FOREIGN KEY (`managerBy`)
+    REFERENCES `basicorder1`.`manager` (`managerID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -96,13 +94,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `basicorder1`.`client`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `basicorder1`.`client` (
-  `Client ID` VARCHAR(10) NOT NULL,
-  `Employee ID` VARCHAR(10) NOT NULL,
-  PRIMARY KEY (`Client ID`),
-  INDEX `fk_Client_Employee1_idx` (`Employee ID` ASC) VISIBLE,
+  `clientID` VARCHAR(10) NOT NULL,
+  `employeeID` VARCHAR(10) NOT NULL,
+  `id` BIGINT NOT NULL,
+  PRIMARY KEY (`clientID`),
+  INDEX `fk_Client_Employee1_idx` (`employeeID` ASC) VISIBLE,
   CONSTRAINT `fk_Client_Employee1`
-    FOREIGN KEY (`Employee ID`)
-    REFERENCES `basicorder1`.`employee` (`Employee ID`))
+    FOREIGN KEY (`employeeID`)
+    REFERENCES `basicorder1`.`employee` (`employeeID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -112,18 +111,18 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `basicorder1`.`drug`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `basicorder1`.`drug` (
-  `Drug ID` VARCHAR(10) NOT NULL,
-  `Drug Supplier ID` VARCHAR(10) NOT NULL,
-  `Drug Name` VARCHAR(20) NOT NULL,
-  `Manufacturing Date` VARCHAR(25) NOT NULL,
-  `Expired Date` VARCHAR(25) NOT NULL,
-  `Type` VARCHAR(20) NOT NULL,
-  `Price (USD)` INT NOT NULL,
-  PRIMARY KEY (`Drug ID`),
-  INDEX `fk_Drug_Drug Supplier1_idx` (`Drug Supplier ID` ASC) VISIBLE,
+  `drugID` VARCHAR(10) NOT NULL,
+  `drugsupplierID` VARCHAR(10) NOT NULL,
+  `drugName` VARCHAR(20) NOT NULL,
+  `manufacturingDate` VARCHAR(25) NOT NULL,
+  `expiredDate` VARCHAR(25) NOT NULL,
+  `type` VARCHAR(20) NOT NULL,
+  `price` INT NOT NULL,
+  PRIMARY KEY (`drugID`),
+  INDEX `fk_Drug_Drug Supplier1_idx` (`drugsupplierID` ASC) VISIBLE,
   CONSTRAINT `fk_Drug_Drug Supplier1`
-    FOREIGN KEY (`Drug Supplier ID`)
-    REFERENCES `basicorder1`.`drug supplier` (`Drug Supplier ID`))
+    FOREIGN KEY (`drugsupplierID`)
+    REFERENCES `basicorder1`.`drugsupplier` (`drugSupplierID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -133,14 +132,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `basicorder1`.`login`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `basicorder1`.`login` (
-  `Login ID` VARCHAR(10) NOT NULL,
-  `Employee ID` VARCHAR(10) NOT NULL,
-  `Password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Login ID`),
-  INDEX `fk_Login_employee1_idx` (`Employee ID` ASC) VISIBLE,
+  `loginID` VARCHAR(10) NOT NULL,
+  `employeeID` VARCHAR(10) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`loginID`),
+  INDEX `fk_Login_employee1_idx` (`employeeID` ASC) VISIBLE,
   CONSTRAINT `fk_Login_employee1`
-    FOREIGN KEY (`Employee ID`)
-    REFERENCES `basicorder1`.`employee` (`Employee ID`))
+    FOREIGN KEY (`employeeID`)
+    REFERENCES `basicorder1`.`employee` (`employeeID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -150,20 +149,20 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `basicorder1`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `basicorder1`.`order` (
-  `Order ID` VARCHAR(10) NOT NULL,
-  `Client ID` VARCHAR(10) NOT NULL,
-  `Drug ID` VARCHAR(10) NOT NULL,
-  `Time` VARCHAR(25) NOT NULL,
-  `Drug Quantity` INT NOT NULL,
-  PRIMARY KEY (`Order ID`),
-  INDEX `fk_Client_has_Drug_Drug1_idx` (`Drug ID` ASC) VISIBLE,
-  INDEX `fk_Client_has_Drug_Client1_idx` (`Client ID` ASC) VISIBLE,
+  `orderID` VARCHAR(10) NOT NULL,
+  `clientID` VARCHAR(10) NOT NULL,
+  `drugID` VARCHAR(10) NOT NULL,
+  `time` DATE NOT NULL,
+  `drugQuantity` INT NOT NULL,
+  PRIMARY KEY (`orderID`),
+  INDEX `fk_Client_has_Drug_Drug1_idx` (`drugID` ASC) VISIBLE,
+  INDEX `fk_Client_has_Drug_Client1_idx` (`clientID` ASC) VISIBLE,
   CONSTRAINT `fk_Client_has_Drug_Client1`
-    FOREIGN KEY (`Client ID`)
-    REFERENCES `basicorder1`.`client` (`Client ID`),
+    FOREIGN KEY (`clientID`)
+    REFERENCES `basicorder1`.`client` (`clientID`),
   CONSTRAINT `fk_Client_has_Drug_Drug1`
-    FOREIGN KEY (`Drug ID`)
-    REFERENCES `basicorder1`.`drug` (`Drug ID`))
+    FOREIGN KEY (`drugID`)
+    REFERENCES `basicorder1`.`drug` (`drugID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -173,20 +172,20 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `basicorder1`.`store`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `basicorder1`.`store` (
-  `Store ID` VARCHAR(10) NOT NULL,
-  `Drug ID` VARCHAR(10) NOT NULL,
-  `Drug Store ID` VARCHAR(10) NOT NULL,
-  `Store Time` VARCHAR(45) NOT NULL,
-  `Quantity` INT NOT NULL,
-  PRIMARY KEY (`Store ID`),
-  INDEX `fk_Store_drug store1_idx` (`Drug Store ID` ASC) VISIBLE,
-  INDEX `fk_Store_drug1_idx` (`Drug ID` ASC) VISIBLE,
+  `storeID` VARCHAR(10) NOT NULL,
+  `drugID` VARCHAR(10) NOT NULL,
+  `drugStoreID` VARCHAR(10) NOT NULL,
+  `storeTime` DATE NOT NULL,
+  `quantity` INT NOT NULL,
+  PRIMARY KEY (`storeID`),
+  INDEX `fk_Store_drug store1_idx` (`drugStoreID` ASC) VISIBLE,
+  INDEX `fk_Store_drug1_idx` (`drugID` ASC) VISIBLE,
   CONSTRAINT `fk_Store_drug store1`
-    FOREIGN KEY (`Drug Store ID`)
-    REFERENCES `basicorder1`.`drug store` (`Drug Store ID`),
+    FOREIGN KEY (`drugStoreID`)
+    REFERENCES `basicorder1`.`drugstore` (`drugStoreID`),
   CONSTRAINT `fk_Store_drug1`
-    FOREIGN KEY (`Drug ID`)
-    REFERENCES `basicorder1`.`drug` (`Drug ID`))
+    FOREIGN KEY (`drugID`)
+    REFERENCES `basicorder1`.`drug` (`drugID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
