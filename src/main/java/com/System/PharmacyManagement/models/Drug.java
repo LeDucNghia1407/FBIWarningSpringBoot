@@ -7,14 +7,22 @@ import java.util.Date;
 public class Drug {
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(
+			name = "drug_sequence",
+			sequenceName = "drug_sequence",
+			allocationSize = 1 //increment by 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator =  "drug_sequence"
+	)
 	private Long id;
 
-	private int drugID;
-	private int drugsupplierID;
-	private int drugName;
-	private Date manufacturingDate;
-	private Date expiredDate;
+	private String drugID;
+	private String drugsupplierID;
+	private String drugName;
+	private String manufacturingDate;
+	private String expiredDate;
 	private String type;
 	private float price;
 
@@ -22,7 +30,7 @@ public class Drug {
 	public Drug() {
 	}
 
-	public Drug(int drugID, int drugsupplierID, int drugName, Date manufacturingDate, Date expiredDate, String type, float price) {
+	public Drug(String drugID, String drugsupplierID, String drugName, String manufacturingDate, String expiredDate, String type, float price) {
 		this.drugID = drugID;
 		this.drugsupplierID = drugsupplierID;
 		this.drugName = drugName;
@@ -39,19 +47,47 @@ public void setId(Long id) {
 		this.id = id;
 	}
 
-public int getDrugID() {
+	public void setDrugID(String drugID) {
+		this.drugID = drugID;
+	}
+
+	public void setDrugsupplierID(String drugsupplierID) {
+		this.drugsupplierID = drugsupplierID;
+	}
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public void setManufacturingDate(String manufacturingDate) {
+		this.manufacturingDate = manufacturingDate;
+	}
+
+	public void setExpiredDate(String expiredDate) {
+		this.expiredDate = expiredDate;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+public String getDrugID() {
 	return drugID;
 }
-public int getDrugSupplierID() {
+public String getDrugSupplierID() {
 	return drugsupplierID;
 }
-public int  getDrugName() {
+public String  getDrugName() {
 	return drugName;
 }
-public Date getManufacturingDate() {
+public String getManufacturingDate() {
 	return manufacturingDate;
 }
-public Date getExpiredDate() {
+public String getExpiredDate() {
 	return expiredDate;
 }
 public String getType() {

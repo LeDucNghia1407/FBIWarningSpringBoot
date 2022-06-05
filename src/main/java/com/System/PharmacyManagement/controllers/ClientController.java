@@ -40,7 +40,7 @@ public class ClientController {
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Cannot find product with id= " + id, "")
+                    new ResponseObject("failed", "Cannot find client with id= " + id, "")
             );
         }
     }
@@ -85,7 +85,7 @@ public class ClientController {
 
     //Delete a Client => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> deleteClient(@PathVariable Long id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);

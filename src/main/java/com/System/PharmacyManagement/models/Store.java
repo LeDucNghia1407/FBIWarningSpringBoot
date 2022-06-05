@@ -7,14 +7,22 @@ import java.util.Date;
 @Table(name = "Store")
 public class Store {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "store_sequence",
+            sequenceName = "store_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "store_sequence"
+    )
     @Column(name = "id", nullable = false)
     private Long id;
 
     private String storeID;
     private String drugID;
     private String drugStoreID;
-    private Date storeTime;
+    private String storeTime;
     private int quantity;
 
     public Store() {
@@ -28,11 +36,31 @@ public class Store {
         this.id = id;
     }
 
-    public Store(String storeID, String drugID, String drugStoreID, Date storeTime, int quantity) {
+    public Store(String storeID, String drugID, String drugStoreID, String storeTime, int quantity) {
         this.storeID = storeID;
         this.drugID = drugID;
         this.drugStoreID = drugStoreID;
         this.storeTime = storeTime;
+        this.quantity = quantity;
+    }
+
+    public void setStoreID(String storeID) {
+        this.storeID = storeID;
+    }
+
+    public void setDrugID(String drugID) {
+        this.drugID = drugID;
+    }
+
+    public void setDrugStoreID(String drugStoreID) {
+        this.drugStoreID = drugStoreID;
+    }
+
+    public void setStoreTime(String storeTime) {
+        this.storeTime = storeTime;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -45,7 +73,7 @@ public class Store {
     public String getdrugStoreID(){
         return drugStoreID;
     }
-    public Date getStoreTime(){
+    public String getStoreTime(){
         return storeTime;
     }
     public int getQuantity(){

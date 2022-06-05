@@ -8,17 +8,25 @@ import javax.persistence.*;
 public class DrugSupplier {
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(
+			name = "drugSupplier_sequence",
+			sequenceName = "drugSupplier_sequence",
+			allocationSize = 1 //increment by 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator =  "drugSupplier_sequence"
+	)
 	private Long id;
 
-	private int drugSupplierID;
+	private String drugSupplierID;
 	private String name;
 	private String address;
 
 	public DrugSupplier() {
 	}
 
-	public DrugSupplier(int drugSupplierID, String name, String address) {
+	public DrugSupplier(String drugSupplierID, String name, String address) {
 		this.drugSupplierID = drugSupplierID;
 		this.name = name;
 		this.address = address;
@@ -28,24 +36,37 @@ public class DrugSupplier {
 		return id;
 	}
 
-public void setId(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
+	public String getDrugSupplierID() {
+		return drugSupplierID;
+	}
 
-public int getDrugSupplierID() {
-	return drugSupplierID;
-}
-public String getName() {
-	return name;
-}
-public String getAddress() {
-	return address;
-}
+	public void setDrugSupplierID(String drugSupplierID) {
+		this.drugSupplierID = drugSupplierID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString(){
-		return "Drug Supplier{" + "Id: "+ id + ", Drug Supplier: " + drugSupplierID + ", Name: " + name + ", Name: " + name + ", Address: " + address +"}";
+		return "Drug Supplier{" + "Id: "+ id + ", Drug Supplier: " + drugSupplierID + ", Name: " + name  + ", Address: " + address +"}";
 	}
 
 }

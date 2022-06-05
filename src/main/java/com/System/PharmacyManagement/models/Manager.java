@@ -7,16 +7,24 @@ import javax.persistence.*;
 public class Manager {
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(
+			name = "manager_sequence",
+			sequenceName = "manager_sequence",
+			allocationSize = 1 //increment by 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator =  "manager_sequence"
+	)
 	private Long id;
 
-	private int managerID;
+	private String managerID;
 	private String drugStoreID;
 
 	public Manager() {
 	}
 
-	public Manager(int managerID, String drugStoreID) {
+	public Manager(String managerID, String drugStoreID) {
 		this.managerID = managerID;
 		this.drugStoreID = drugStoreID;
 	}
@@ -29,8 +37,15 @@ public void setId(Long id) {
 		this.id = id;
 	}
 
+	public void setManagerID(String managerID) {
+		this.managerID = managerID;
+	}
 
-public int getManagerID() {
+	public void setDrugStoreID(String drugStoreID) {
+		this.drugStoreID = drugStoreID;
+	}
+
+	public String getManagerID() {
 	return managerID;
 }
 public String getDrugStoreID() {

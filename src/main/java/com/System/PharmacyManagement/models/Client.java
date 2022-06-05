@@ -7,17 +7,17 @@ import javax.persistence.*;
 public class Client {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	//This is "primary key"
-//	@SequenceGenerator(
-//			name = "client_sequence",
-//			sequenceName = "client_sequence",
-//			allocationSize = 1 //increment by 1
-//	)
-//	@GeneratedValue(
-//			strategy = GenerationType.SEQUENCE,
-//			generator =  "client_sequence"
-//	)
+	@SequenceGenerator(
+			name = "client_sequence",
+			sequenceName = "client_sequence",
+			allocationSize = 1 //increment by 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator =  "client_sequence"
+	)
+	@Column(name = "id", nullable = false)
 	private Long id;
 	//validate = constraint
 

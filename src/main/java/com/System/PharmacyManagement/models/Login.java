@@ -7,7 +7,15 @@ import javax.persistence.*;
 public class Login {
 	@Id
 	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(
+			name = "login_sequence",
+			sequenceName = "login_sequence",
+			allocationSize = 1 //increment by 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator =  "login_sequence"
+	)
 	private Long id;
 
 	private String loginID;
@@ -23,7 +31,7 @@ public class Login {
 		this.password = password;
 	}
 
-	public Long getId() {
+public Long getId() {
 		return id;
 	}
 
@@ -31,8 +39,19 @@ public void setId(Long id) {
 		this.id = id;
 	}
 
+	public void setLoginID(String loginID) {
+		this.loginID = loginID;
+	}
 
-public String getLoginID() {
+	public void setEmployeeID(String employeeID) {
+		this.employeeID = employeeID;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getLoginID() {
 	return loginID;
 }
 public String getEmployeeID() {
