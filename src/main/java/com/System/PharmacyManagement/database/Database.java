@@ -19,10 +19,10 @@ public class Database {
             private static final Logger logger = LoggerFactory.getLogger(Database.class);
             @Override
             public void run(String... args) throws Exception {
-                Client clientA = new Client("C7", "E8");
-                Client clientB = new Client("C8", "E9");
-                logger.info("insert data: "+ clientRepository.save(clientA));
-                logger.info("insert data: "+ clientRepository.save(clientB));
+//                Client clientA = new Client("C7", "E8");
+//                Client clientB = new Client("C8", "E9");
+//                logger.info("insert data: "+ clientRepository.save(clientA));
+//                logger.info("insert data: "+ clientRepository.save(clientB));
             }
         };
     }

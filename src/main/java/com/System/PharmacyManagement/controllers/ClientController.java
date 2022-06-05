@@ -84,10 +84,11 @@ public class ClientController {
     }
 
     //Delete a Client => DELETE method
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id) {
         boolean exists = repository.existsById(id);
         if(exists) {
+            repository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Delete client successfully", "")
             );

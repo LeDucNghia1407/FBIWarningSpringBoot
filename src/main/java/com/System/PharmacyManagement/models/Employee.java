@@ -1,19 +1,19 @@
 package com.System.PharmacyManagement.models;
 
 public class Employee {
-	private String employeeID;
-	private String drugStoreID;
-	private String managerBy;
+	private int employeeID;
+	private int drugStoreID;
+	private int managerID;
 	private String name;
 	private String email;
-	private int phone;
-	private byte permission;
+	private String phone;
+	private int permission;
 	private int salary;
 
-public void setEmployee(String employeeID, String drugStoreID, String managerBy, String name, String email, int phone, byte permission, int salary) {
+public void setEmployee(int employeeID, int drugStoreID, int managerBy, String name, String email, String phone, byte permission, int salary) {
 		this.employeeID = employeeID;
 		this.drugStoreID = drugStoreID;
-		this.managerBy = managerBy;
+		this.managerID = managerBy;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
@@ -21,14 +21,14 @@ public void setEmployee(String employeeID, String drugStoreID, String managerBy,
 		this.salary = salary;
 }
 
-public String getEmployeeID() {
+public int getEmployeeID() {
 	return employeeID;
 }
-public String getDrugStoreID() {
+public int getDrugStoreID() {
 	return drugStoreID;
 }
-public String getManagerBy() {
-	return managerBy;
+public int getManagerBy() {
+	return managerID;
 }
 public String getName() {
 	return name;
@@ -36,10 +36,10 @@ public String getName() {
 public String getEmail() {
 	return email;
 }
-public int getPhone() {
+public String getPhone() {
 	return phone;
 }
-public byte getPermission() {
+public int getPermission() {
 	return permission;
 }
 public int getSalary() {

@@ -1,29 +1,30 @@
 package com.System.PharmacyManagement.models;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table(name = "Order")
 public class Order {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	private Long id;
+
 	private String orderID;
 	private String drugID;
 	private String clientID;
 	private Date time;
 	private int drugQuantity;
 
-public Order(String orderID, String drugID, String clientID, Date time, int drugQuantity) {
-		this.orderID = orderID;
-		this.clientID = clientID;
-		this.drugID = drugID;
-		this.time = time;
-		this.drugQuantity = drugQuantity;
-}
+	public Long getId() {
+		return id;
+	}
 
-	public void setOrder(String orderID, String drugID, String clientID, Date time, int drugQuantity) {
-		this.orderID = orderID;
-		this.drugID = drugID;
-		this.clientID = clientID;
-		this.time = time;
-		this.drugQuantity = drugQuantity;
-}
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 public String getOrderID() {
 	return orderID;
@@ -40,4 +41,9 @@ public Date getTime() {
 int getDrugQuantity() {
 	return drugQuantity;
 }
+	@Override
+	public String toString(){
+		return "Manager{" + "Id: "+ id + ", Order ID: " + orderID +", Drug ID: "+ drugID+", Client ID: "+ clientID+", Time: "+ time+", Drug Quantity: "+ drugQuantity+"}";
+	}
+
 }

@@ -3,18 +3,31 @@ package com.System.PharmacyManagement.models;
 import javax.persistence.*;
 //Plain Object Java Object = POJO
 @Entity
+@Table(name="Client")
 public class Client {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	//This is "primary key"
+//	@SequenceGenerator(
+//			name = "client_sequence",
+//			sequenceName = "client_sequence",
+//			allocationSize = 1 //increment by 1
+//	)
+//	@GeneratedValue(
+//			strategy = GenerationType.SEQUENCE,
+//			generator =  "client_sequence"
+//	)
 	private Long id;
+	//validate = constraint
+
 	private String clientID;
 	private String employeeID;
 
 	public Client() {
 	}
 
+	//Calculated field = transient
 	public Client(String clientID, String employeeID) {
 		this.id = id;
 		this.clientID = clientID;
@@ -47,6 +60,6 @@ public class Client {
 
 	@Override
 	public String toString(){
-		return "Client{" + "Id: "+ id + ", Client Name: " +clientID +", EmployeeId"+ employeeID+"}";
+		return "Client{" + "Id: "+ id + ", Client Name: " +clientID +", EmployeeId: "+ employeeID+"}";
 	}
 }
