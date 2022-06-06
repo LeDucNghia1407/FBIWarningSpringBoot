@@ -23,25 +23,33 @@ Creating Logical and Database for the course Programming Exercise 2022 - Prof. H
 
 
 ## API CONTROL(POSTMAN)
-### **GETservice** //Get data from table
-- http://localhost:8080/api/v1/Clients
-- http://localhost:8080/api/v1/Drugs
-- http://localhost:8080/api/v1/DrugStores
-- http://localhost:8080/api/v1/DrugSuppliers
-- http://localhost:8080/api/v1/Employees
-- http://localhost:8080/api/v1/Logins
-- http://localhost:8080/api/v1/Managers
-- http://localhost:8080/api/v1/Orders
-- http://localhost:8080/api/v1/Stores
-### **POSTservice**//Insert(Check for duplication) data into Table
-- Insert via JSON FORMAT {"id": 1, "clientID": "C1", "employeeID": "E1"}
-- http://localhost:8080/api/v1/Clients/insert
-### **PUTservice** //Update or Insert data inside Table
-- http://localhost:8080/api/v1/Clients/1 (1 here is the id of the Client)
-- Same applied for other API
-### **DELETEservice** //Delete data inside Table
-- http://localhost:8080/api/v1/Clients/delete/1 (1 here is the id of the Client)
-- Same for orther API
+- To connect to Database use this link: http://localhost:8080 which expose the following APIs
+- There are following API to connect to table
+
+
+API | Table | Description
+--- | --- | ---
+/api/v1/Clients | client | client info
+/api/v1/Drugs | drug | drugs info
+/api/v1/DrugStores | drugStore | drug store info
+/api/v1/DrugSuppliers | drugSupplier | drug suppier info
+/api/v1/Employees | employee | employee info
+/api/v1/Logins | login | login info
+/api/v1/Managers | manager | manager info
+/api/v1/Orders | order | order info
+/api/v1/Stores | store | store info
+
+### REST API methods:
+
+URL |	HTTP | Method |	Description
+--- | --- | --- | ---
+/api/v1/Clients	|GET	| Get all Clients
+/api/v1/Clients/{id} |	GET |	Get client by ID
+/api/v1/Clients/insertClients | POST |	Create a new client
+/api/v1/Clients/{id} |	PUT |	Update existing client
+/api/v1/Clients/delete{id} |	DELETE |	Delete client by ID
+
+
 ## Development Notes
 - Code is Fixed Now
 - ref: https://youtu.be/UMePnyjr6FM
