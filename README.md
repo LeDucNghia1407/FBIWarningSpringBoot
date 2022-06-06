@@ -4,7 +4,7 @@ Creating Logical and Database for the course Programming Exercise 2022 - Prof. H
 
 ## Application Install (REQUIREMENT)
 - Postman (For API Testing)
-- IntelliJ (For Java Development)
+- IntelliJ Community IDE(For Java Development)
 - MySQL Workbench
 - MySQL Server
 
@@ -19,7 +19,7 @@ Creating Logical and Database for the course Programming Exercise 2022 - Prof. H
   - Configurate your Port connection(in our case Port is 3306)
   - Edit username and passwords to your root username and password
   - Edit the schema name in the connection to your schema(in our case is PMSDatabase)
-- Run the Application
+- Run the Application file in /src/main/java/PharmacyManagermentApplication.java
 
 
 ## API CONTROL(POSTMAN)
