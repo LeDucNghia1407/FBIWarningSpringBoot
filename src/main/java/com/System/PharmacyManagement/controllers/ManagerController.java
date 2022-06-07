@@ -32,7 +32,7 @@ public class ManagerController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
         Optional<Manager> foundManager = repository.findById(id);
         if (foundManager.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -70,13 +70,13 @@ public class ManagerController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateManager(@RequestBody Manager newManager, @PathVariable Long id) {
+    ResponseEntity<ResponseObject> updateManager(@RequestBody Manager newManager, @PathVariable String id) {
         Manager updatedManger = repository.findById(id).map(manager -> {
             manager.setManagerID(newManager.getManagerID());
             manager.setDrugStoreID(newManager.getDrugStoreID());
             return repository.save(newManager);
         }).orElseGet(() -> {
-            newManager.setId(id);
+            newManager.setManagerID(id);
             return repository.save(newManager);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -86,7 +86,7 @@ public class ManagerController {
 
     //Delete a Manager => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteManager(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> deleteManager(@PathVariable String id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);
