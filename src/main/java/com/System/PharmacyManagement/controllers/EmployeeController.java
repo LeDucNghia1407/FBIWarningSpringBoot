@@ -31,7 +31,7 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
         Optional<Employee> foundEmployee = repository.findById(id);
         if (foundEmployee.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -69,18 +69,19 @@ public class EmployeeController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    ResponseEntity<ResponseObject> updateEmployee(@RequestBody Employee newEmployee, @PathVariable String id) {
         Employee updatedEmployee = repository.findById(id).map(employee -> {
             employee.setEmployeeID(newEmployee.getEmployeeID());
             employee.setDrugStoreID(newEmployee.getDrugStoreID());
             employee.setManagerID(newEmployee.getManagerBy());
             employee.setName(newEmployee.getName());
+            employee.setEmail(newEmployee.getEmail());
             employee.setPhone(newEmployee.getPhone());
             employee.setPermission(newEmployee.getPermission());
             employee.setSalary(newEmployee.getSalary());
             return repository.save(newEmployee);
         }).orElseGet(() -> {
-            newEmployee.setId(id);
+            newEmployee.setEmployeeID(id);
             return repository.save(newEmployee);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -90,7 +91,7 @@ public class EmployeeController {
 
     //Delete a Employee => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteEmployee(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> deleteEmployee(@PathVariable String id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);

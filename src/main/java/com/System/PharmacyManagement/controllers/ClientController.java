@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/Clients")
 
-    //HTTP://localhost:8080/api/v1/Clients
+//HTTP://localhost:8080/api/v1/Clients //Go to internet or Postman
 public class ClientController {
     //DI = Dependency Injection
     @Autowired
@@ -31,7 +31,7 @@ public class ClientController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
         Optional<Client> foundClient = repository.findById(id);
         if (foundClient.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -69,13 +69,13 @@ public class ClientController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateClient(@RequestBody Client newClient, @PathVariable Long id) {
+    ResponseEntity<ResponseObject> updateClient(@RequestBody Client newClient, @PathVariable String id) {
         Client updatedClient = repository.findById(id).map(client -> {
             client.setClientID(newClient.getClientID());
             client.setEmployeeID(newClient.getEmployeeID());
             return repository.save(client);
         }).orElseGet(() -> {
-            newClient.setId(id);
+            newClient.setClientID(id);
             return repository.save(newClient);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -85,7 +85,7 @@ public class ClientController {
 
     //Delete a Client => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteClient(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> deleteClient(@PathVariable String id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);

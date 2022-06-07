@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public class DrugController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
         Optional<Drug> foundDrug = repository.findById(id);
         if (foundDrug.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -71,7 +72,7 @@ public class DrugController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateDrug(@RequestBody Drug newDrug, @PathVariable Long id) {
+    ResponseEntity<ResponseObject> updateDrug(@RequestBody Drug newDrug, @PathVariable String id) {
         Drug updatedDrug = repository.findById(id).map(drug -> {
             drug.setDrugID(newDrug.getDrugID());
             drug.setDrugsupplierID(newDrug.getDrugSupplierID());
@@ -82,7 +83,7 @@ public class DrugController {
             drug.setPrice(newDrug.getPrice());
             return repository.save(drug);
         }).orElseGet(() -> {
-            newDrug.setId(id);
+            newDrug.setDrugID(id);
             return repository.save(newDrug);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -92,7 +93,7 @@ public class DrugController {
 
     //Delete a Drug => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteDrug(@PathVariable Long id) {
+    ResponseEntity<ResponseObject> deleteDrug(@PathVariable String id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);
