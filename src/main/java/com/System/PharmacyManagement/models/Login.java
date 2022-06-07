@@ -1,25 +1,20 @@
 package com.System.PharmacyManagement.models;
 
+
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Login")
 public class Login {
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "login_sequence",
-			sequenceName = "login_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "login_sequence"
-	)
-	private Long id;
 
+
+
+	@Id
 	private String loginID;
+	@Column(name = "employeeID", nullable = false)
 	private String employeeID;
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	public Login() {
@@ -31,13 +26,7 @@ public class Login {
 		this.password = password;
 	}
 
-public Long getId() {
-		return id;
-	}
 
-public void setId(Long id) {
-		this.id = id;
-	}
 
 	public void setLoginID(String loginID) {
 		this.loginID = loginID;
@@ -63,7 +52,7 @@ public String getPassword() {
 
 	@Override
 	public String toString(){
-		return "Login{" + "Id: "+ id + ", Client Name: " +loginID +", EmployeeId: "+ employeeID+", Password: "+ password+"}";
+		return "Login{"+ ", Client Name: " +loginID +", EmployeeId: "+ employeeID+", Password: "+ password+"}";
 	}
 }
 

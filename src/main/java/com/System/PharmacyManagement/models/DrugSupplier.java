@@ -1,26 +1,21 @@
 package com.System.PharmacyManagement.models;
 
 
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "drugSupplier")
 public class DrugSupplier {
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "drugSupplier_sequence",
-			sequenceName = "drugSupplier_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "drugSupplier_sequence"
-	)
-	private Long id;
 
+
+
+
+	@Id
 	private String drugSupplierID;
+	@Column(name = "name", nullable = false)
 	private String name;
+	@Column(name = "address", nullable = false)
 	private String address;
 
 	public DrugSupplier() {
@@ -32,13 +27,6 @@ public class DrugSupplier {
 		this.address = address;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getDrugSupplierID() {
 		return drugSupplierID;
@@ -66,7 +54,7 @@ public class DrugSupplier {
 
 	@Override
 	public String toString(){
-		return "Drug Supplier{" + "Id: "+ id + ", Drug Supplier: " + drugSupplierID + ", Name: " + name  + ", Address: " + address +"}";
+		return "Drug Supplier{" + ", Drug Supplier: " + drugSupplierID + ", Name: " + name  + ", Address: " + address +"}";
 	}
 
 }

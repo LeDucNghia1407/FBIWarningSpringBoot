@@ -1,41 +1,30 @@
 package com.System.PharmacyManagement.models;
 
+
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "Orders")
 public class Orders {
+
+
 	@Id
-	@SequenceGenerator(
-			name = "order_sequence",
-			sequenceName = "order_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "order_sequence"
-	)
-	@Column(name = "id", nullable = false)
-	private Long id;
-
 	private String orderID;
+	@Column(name = "clientID", nullable = false)
 	private String clientID;
+	@Column(name = "drugID", nullable = false)
 	private String drugID;
-
+	@Column(name = "time", nullable = false)
 	private Date time;
+	@Column(name = "drugQuantity", nullable = false)
 	private int drugQuantity;
 
 	public Orders() {
 	}
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Orders(String orderID, String clientID, String drugID, Date time, int drugQuantity) {
 		this.orderID = orderID;
@@ -82,7 +71,7 @@ public int getDrugQuantity() {
 }
 	@Override
 	public String toString(){
-		return "Order {" + "Id: "+ id + ", Order ID: " + orderID +", Drug ID: "+ drugID+", Client ID: "+ clientID+", Time: "+ time+", Drug Quantity: "+ drugQuantity+"}";
+		return "Order {"  + ", Order ID: " + orderID +", Drug ID: "+ drugID+", Client ID: "+ clientID+", Time: "+ time+", Drug Quantity: "+ drugQuantity+"}";
 	}
 
 }

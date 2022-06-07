@@ -1,40 +1,30 @@
 package com.System.PharmacyManagement.models;
 
+
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "Store")
 public class Store {
-    @Id
-    @SequenceGenerator(
-            name = "store_sequence",
-            sequenceName = "store_sequence",
-            allocationSize = 1 //increment by 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator =  "store_sequence"
-    )
-    @Column(name = "id", nullable = false)
-    private Long id;
 
+
+    @Id
     private String storeID;
+    @Column(name = "drugID", nullable = false)
     private String drugID;
+    @Column(name = "drugStoreID", nullable = false)
     private String drugStoreID;
+    @Column(name = "storeTime", nullable = false)
     private Date storeTime;
+    @Column(name = "Quantity", nullable = false)
     private int quantity;
 
     public Store() {
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Store(String storeID, String drugID, String drugStoreID, Date storeTime, int quantity) {
         this.storeID = storeID;
@@ -82,7 +72,7 @@ public class Store {
 
     @Override
     public String toString(){
-        return "Store {" + "Id: "+ id + ", Order ID: " + storeID +", Drug ID: "+ drugID+", Client ID: "+ drugStoreID+", Time: "+ storeTime+", Drug Quantity: "+ quantity+"}";
+        return "Store {"+ ", Order ID: " + storeID +", Drug ID: "+ drugID+", Client ID: "+ drugStoreID+", Time: "+ storeTime+", Drug Quantity: "+ quantity+"}";
     }
 }
 

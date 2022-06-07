@@ -1,5 +1,7 @@
 package com.System.PharmacyManagement.models;
 
+
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -7,29 +9,26 @@ import java.sql.Date;
 @Table(name="Drug")
 public class Drug {
 
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "drug_sequence",
-			sequenceName = "drug_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "drug_sequence"
-	)
-	private Long id;
+
+
 
 	public Drug(){
 
 	}
 
+	@Id
 	private String drugID;
+	@Column(name = "drugSupplierID", nullable = false)
 	private String drugsupplierID;
+	@Column(name = "drugName", nullable = false)
 	private String drugName;
+	@Column(name = "manufacturingDate", nullable = false)
 	private Date manufacturingDate;
+	@Column(name = "expiredDate", nullable = false)
 	private Date expiredDate;
+	@Column(name = "type", nullable = false)
 	private String type;
+	@Column(name = "price", nullable = false)
 	private float price;
 
 
@@ -43,13 +42,7 @@ public class Drug {
 		this.type = type;
 		this.price = price;
 	}
-public Long getId() {
-		return id;
-	}
 
-public void setId(Long id) {
-		this.id = id;
-	}
 
 	public void setDrugID(String drugID) {
 		this.drugID = drugID;
@@ -103,6 +96,6 @@ public float getPrice() {
 
 	@Override
 	public String toString(){
-		return "Drug{" + "Id: "+ id + ", Drug ID: " + drugID +", Drug SupplierID: "+ drugsupplierID +", Drug Name: "+ drugName +", Manufacturing Date: "+ manufacturingDate + ", Expired Date "+ expiredDate +", Type: "+ type +", Price "+ price +"}";
+		return "Drug{"  + ", Drug ID: " + drugID +", Drug SupplierID: "+ drugsupplierID +", Drug Name: "+ drugName +", Manufacturing Date: "+ manufacturingDate + ", Expired Date "+ expiredDate +", Type: "+ type +", Price "+ price +"}";
 	}
 }
