@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/Clients")
 
-    //HTTP://localhost:8080/api/v1/Clients
+    //HTTP://localhost:8080/api/v1/Clients //Go to internet or Postman
 public class ClientController {
     //DI = Dependency Injection
     @Autowired
@@ -40,7 +40,7 @@ public class ClientController {
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Cannot find product with id= " + id, "")
+                    new ResponseObject("failed", "Cannot find client with id= " + id, "")
             );
         }
     }
@@ -84,10 +84,11 @@ public class ClientController {
     }
 
     //Delete a Client => DELETE method
-    @DeleteMapping("/{id}")
-    ResponseEntity<ResponseObject> deleteProduct(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<ResponseObject> deleteClient(@PathVariable Long id) {
         boolean exists = repository.existsById(id);
         if(exists) {
+            repository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Delete client successfully", "")
             );
