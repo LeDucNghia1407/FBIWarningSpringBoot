@@ -2,24 +2,50 @@ package com.System.PharmacyManagement.models;
 
 import javax.persistence.*;
 //Plain Object Java Object = POJO
-@Entity
+@Entity //This is a table in Database
+@Table(name="Client")  // Create a Table name Client
+
 public class Client {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	//This is "primary key"
+	@Id
+	//Generate a table name <<Entity name>> sequence
+	@SequenceGenerator(
+			name = "client_sequence",
+			sequenceName = "client_sequence",
+			allocationSize = 1 //increment by 1
+	)
+
+	//Increase the valye in <<Entity name>> sequence table
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator =  "client_sequence"
+	)
+	@Column(name = "id", nullable = false)
 	private Long id;
+	//validate = constraint
+
+
 	private String clientID;
 	private String employeeID;
 
 	public Client() {
 	}
 
+	//Calculated field = transient
+
+	//Create Client constructor
+
 	public Client(String clientID, String employeeID) {
 		this.id = id;
 		this.clientID = clientID;
 		this.employeeID = employeeID;
 	}
+
+
+	//Set and get Operation
+
 
 	public Long getId() {
 		return id;
@@ -45,8 +71,12 @@ public class Client {
 		this.employeeID = employeeID;
 	}
 
+
+	//Return info to string method
+
+
 	@Override
 	public String toString(){
-		return "Client{" + "Id: "+ id + ", Client Name: " +clientID +", EmployeeId"+ employeeID+"}";
+		return "Client{" + "Id: "+ id + ", Client Name: " +clientID +", EmployeeId: "+ employeeID+"}";
 	}
 }

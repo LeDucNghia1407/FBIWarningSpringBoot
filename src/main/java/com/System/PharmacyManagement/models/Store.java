@@ -1,13 +1,40 @@
 package com.System.PharmacyManagement.models;
 
-import java.util.Date;
+import javax.persistence.*;
+import java.sql.Date;
 
+@Entity
+@Table(name = "Store")
 public class Store {
+    @Id
+    @SequenceGenerator(
+            name = "store_sequence",
+            sequenceName = "store_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "store_sequence"
+    )
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     private String storeID;
     private String drugID;
     private String drugStoreID;
     private Date storeTime;
     private int quantity;
+
+    public Store() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Store(String storeID, String drugID, String drugStoreID, Date storeTime, int quantity) {
         this.storeID = storeID;
@@ -16,11 +43,24 @@ public class Store {
         this.storeTime = storeTime;
         this.quantity = quantity;
     }
-    public void setStore(String storeID, String drugID, String drugStoreID, Date storeTime, int quantity) {
+
+    public void setStoreID(String storeID) {
         this.storeID = storeID;
+    }
+
+    public void setDrugID(String drugID) {
         this.drugID = drugID;
+    }
+
+    public void setDrugStoreID(String drugStoreID) {
         this.drugStoreID = drugStoreID;
+    }
+
+    public void setStoreTime(Date storeTime) {
         this.storeTime = storeTime;
+    }
+
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -38,6 +78,11 @@ public class Store {
     }
     public int getQuantity(){
         return quantity;
+    }
+
+    @Override
+    public String toString(){
+        return "Store {" + "Id: "+ id + ", Order ID: " + storeID +", Drug ID: "+ drugID+", Client ID: "+ drugStoreID+", Time: "+ storeTime+", Drug Quantity: "+ quantity+"}";
     }
 }
 
