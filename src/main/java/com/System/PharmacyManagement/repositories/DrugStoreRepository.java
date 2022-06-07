@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface DrugStoreRepository extends JpaRepository<DrugStore, Long> {
+public interface DrugStoreRepository extends JpaRepository<DrugStore, String> {
     List<DrugStore> findBydrugStoreID(String drugStoreID);
 
 }
