@@ -32,7 +32,7 @@ public class OrderController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
         Optional<Orders> foundOrder = repository.findById(id);
         if (foundOrder.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -70,7 +70,7 @@ public class OrderController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateOrder(@RequestBody Orders newOrders, @PathVariable String id) {
+    ResponseEntity<ResponseObject> updateOrder(@RequestBody Orders newOrders, @PathVariable Long id) {
         Orders updatedOrders = repository.findById(id).map(order -> {
             order.setOrderID(newOrders.getOrderID());
             order.setDrugID(newOrders.getDrugID());
@@ -79,7 +79,7 @@ public class OrderController {
             order.setDrugQuantity(newOrders.getDrugQuantity());
             return repository.save(newOrders);
         }).orElseGet(() -> {
-            newOrders.setOrderID(id);
+            newOrders.setId(id);
             return repository.save(newOrders);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -89,7 +89,7 @@ public class OrderController {
 
     //Delete a Order => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteOrder(@PathVariable String id) {
+    ResponseEntity<ResponseObject> deleteOrder(@PathVariable Long id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);

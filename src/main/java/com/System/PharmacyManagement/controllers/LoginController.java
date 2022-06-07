@@ -32,7 +32,7 @@ public class LoginController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
         Optional<Login> foundLogin = repository.findById(id);
         if (foundLogin.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -70,14 +70,14 @@ public class LoginController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateLogin(@RequestBody Login newLogin, @PathVariable String id) {
+    ResponseEntity<ResponseObject> updateLogin(@RequestBody Login newLogin, @PathVariable Long id) {
         Login updatedLogin = repository.findById(id).map(login -> {
             login.setLoginID(newLogin.getLoginID());
             login.setEmployeeID(newLogin.getEmployeeID());
             login.setPassword(newLogin.getPassword());
             return repository.save(newLogin);
         }).orElseGet(() -> {
-            newLogin.setLoginID(id);
+            newLogin.setId(id);
             return repository.save(newLogin);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -87,7 +87,7 @@ public class LoginController {
 
     //Delete a Login => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteLogin(@PathVariable String id) {
+    ResponseEntity<ResponseObject> deleteLogin(@PathVariable Long id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);

@@ -31,7 +31,7 @@ public class DrugSupplierController {
 
     @GetMapping("/{id}")
         //Let's return an Object with: data, message, status
-    ResponseEntity<ResponseObject> findById(@PathVariable String id) {
+    ResponseEntity<ResponseObject> findById(@PathVariable Long id) {
         Optional<DrugSupplier> foundDrugSupplier = repository.findById(id);
         if (foundDrugSupplier.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -69,14 +69,14 @@ public class DrugSupplierController {
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateDrugSupplier(@RequestBody DrugSupplier newDrugSupplier, @PathVariable String id) {
+    ResponseEntity<ResponseObject> updateDrugSupplier(@RequestBody DrugSupplier newDrugSupplier, @PathVariable Long id) {
         DrugSupplier updatedDrugSupplier = repository.findById(id).map(drugSupplier -> {
             drugSupplier.setDrugSupplierID(newDrugSupplier.getDrugSupplierID());
             drugSupplier.setName(newDrugSupplier.getName());
             drugSupplier.setAddress(newDrugSupplier.getAddress());
             return repository.save(drugSupplier);
         }).orElseGet(() -> {
-            newDrugSupplier.setDrugSupplierID(id);
+            newDrugSupplier.setId(id);
             return repository.save(newDrugSupplier);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -86,7 +86,7 @@ public class DrugSupplierController {
 
     //Delete a DrugSupplier => DELETE method
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteDrugSupplier(@PathVariable String id) {
+    ResponseEntity<ResponseObject> deleteDrugSupplier(@PathVariable Long id) {
         boolean exists = repository.existsById(id);
         if(exists) {
             repository.deleteById(id);
