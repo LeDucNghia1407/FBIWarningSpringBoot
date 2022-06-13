@@ -35,7 +35,7 @@ public class Store {
     private Drug drug;
 
     @ManyToOne
-    @JoinColumn(name = "drugSupplierID", nullable = true)
+    @JoinColumn(name = "drugStoreID", nullable = true)
     private DrugStore drugStore;
 
     public Store(long id, Date storeTime, int drugQuantity, Drug drug, DrugStore drugStore) {
