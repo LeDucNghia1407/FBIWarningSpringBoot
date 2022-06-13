@@ -1,87 +1,88 @@
 package com.System.PharmacyManagement.models;
 
+
+
+import lombok.*;
+
 import javax.persistence.*;
+import java.sql.Date;
 
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "Orders")
 public class Orders {
-	@Id
-	@SequenceGenerator(
-			name = "order_sequence",
-			sequenceName = "order_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "order_sequence"
-	)
-	@Column(name = "id", nullable = false)
-	private Long id;
 
-	private String orderID;
-	private String clientID;
-	private String drugID;
+    @Id
+    @SequenceGenerator(
+            name = "orders_sequence",
+            sequenceName = "orders_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "orders_sequence"
+    )
+    @Column(name = "id", nullable = false)
+    private long id;
+    //@Column(nullable = false)
+    private Date time;
+    private int drugQuantity;
 
-	private String time;
-	private int drugQuantity;
+    @ManyToOne
+    @JoinColumn(name = "drugID", nullable = true)
+    private Drug drug;
 
-	public Orders() {
-	}
+    @ManyToOne
+    @JoinColumn(name = "clientID", nullable = true)
+    private Client client;
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Orders(long id, Date time, int drugQuantity, Drug drug, Client client) {
+        this.id = id;
+        this.time = time;
+        this.drugQuantity = drugQuantity;
+        this.drug = drug;
+        this.client = client;
+    }
 
-	public Orders(String orderID, String clientID, String drugID, String time, int drugQuantity) {
-		this.orderID = orderID;
-		this.clientID = clientID;
-		this.drugID = drugID;
-		this.time = time;
-		this.drugQuantity = drugQuantity;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setOrderID(String orderID) {
-		this.orderID = orderID;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setDrugID(String drugID) {
-		this.drugID = drugID;
-	}
+    public Date getTime() {
+        return time;
+    }
 
-	public void setClientID(String clientID) {
-		this.clientID = clientID;
-	}
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
-	public void setTime(String time) {
-		this.time = time;
-	}
+    public int getDrugQuantity() {
+        return drugQuantity;
+    }
 
-	public void setDrugQuantity(int drugQuantity) {
-		this.drugQuantity = drugQuantity;
-	}
+    public void setDrugQuantity(int drugQuantity) {
+        this.drugQuantity = drugQuantity;
+    }
 
-public String getOrderID() {
-	return orderID;
-}
-public String getDrugID() {
-	return drugID;
-}
-public String getClientID() {
-	return clientID;
-}
-public String getTime() {
-	return time;
-}
-public int getDrugQuantity() {
-	return drugQuantity;
-}
-	@Override
-	public String toString(){
-		return "Manager{" + "Id: "+ id + ", Order ID: " + orderID +", Drug ID: "+ drugID+", Client ID: "+ clientID+", Time: "+ time+", Drug Quantity: "+ drugQuantity+"}";
-	}
+    public Drug getDrug() {
+        return drug;
+    }
 
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

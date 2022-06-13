@@ -1,65 +1,63 @@
 package com.System.PharmacyManagement.models;
 
+
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
-//Plain Object Java Object = POJO
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name="Client")
 public class Client {
 
-	@Id
-	//This is "primary key"
-	@SequenceGenerator(
-			name = "client_sequence",
-			sequenceName = "client_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "client_sequence"
-	)
-	@Column(name = "id", nullable = false)
-	private Long id;
-	//validate = constraint
 
-	private String clientID;
-	private String employeeID;
 
-	public Client() {
-	}
+    @Id
+    //This is "primary key"
+    @SequenceGenerator(
+            name = "client_sequence",
+            sequenceName = "client_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "client_sequence"
+    )
+    @Column(name = "id", nullable = false)
+    private long id;
 
-	//Calculated field = transient
-	public Client(String clientID, String employeeID) {
-		this.id = id;
-		this.clientID = clientID;
-		this.employeeID = employeeID;
-	}
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "employeeID", nullable = true)
+    private Employee employee;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public String getClientID() {
-		return clientID;
-	}
 
-	public void setClientID(String clientID) {
-		this.clientID = clientID;
-	}
 
-	public String getEmployeeID() {
-		return employeeID;
-	}
 
-	public void setEmployeeID(String employeeID) {
-		this.employeeID = employeeID;
-	}
+    public Client(long id, Employee employee) {
+        this.id = id;
+        this.employee = employee;
+    }
 
-	@Override
-	public String toString(){
-		return "Client{" + "Id: "+ id + ", Client Name: " +clientID +", EmployeeId: "+ employeeID+"}";
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 }

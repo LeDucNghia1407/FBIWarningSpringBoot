@@ -1,58 +1,56 @@
 package com.System.PharmacyManagement.models;
 
+
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "Manager")
 public class Manager {
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "manager_sequence",
-			sequenceName = "manager_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "manager_sequence"
-	)
-	private Long id;
 
-	private String managerID;
-	private String drugStoreID;
+    @Id
+    @SequenceGenerator(
+            name = "manager_sequence",
+            sequenceName = "manager_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "manager_sequence"
+    )
+    @Column(name = "id", nullable = false)
+    private long id;
 
-	public Manager() {
-	}
+    @OneToOne
+    @JoinColumn(name = "DrugStoreID", nullable = true)
+    private DrugStore drugStore;
 
-	public Manager(String managerID, String drugStoreID) {
-		this.managerID = managerID;
-		this.drugStoreID = drugStoreID;
-	}
 
-	public Long getId() {
-		return id;
-	}
 
-public void setId(Long id) {
-		this.id = id;
-	}
+    public Manager(long id, DrugStore drugStore) {
+        this.id = id;
+        this.drugStore = drugStore;
+    }
 
-	public void setManagerID(String managerID) {
-		this.managerID = managerID;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setDrugStoreID(String drugStoreID) {
-		this.drugStoreID = drugStoreID;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getManagerID() {
-	return managerID;
-}
-public String getDrugStoreID() {
-	return drugStoreID;
-}
-	@Override
-	public String toString(){
-		return "Manager{" + "Id: "+ id + ", Manager: " + managerID +", Drug Store: "+ drugStoreID+"}";
-	}
+    public DrugStore getDrugStore() {
+        return drugStore;
+    }
+
+    public void setDrugStore(DrugStore drugStore) {
+        this.drugStore = drugStore;
+    }
 }

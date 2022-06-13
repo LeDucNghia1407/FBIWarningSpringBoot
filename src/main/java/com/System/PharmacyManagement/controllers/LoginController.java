@@ -1,10 +1,8 @@
 package com.System.PharmacyManagement.controllers;
 
 
-
-import com.System.PharmacyManagement.models.Login;
-import com.System.PharmacyManagement.models.ResponseObject;
-import com.System.PharmacyManagement.repositories.LoginRepository;
+import com.System.PharmacyManagement.models.*;
+import com.System.PharmacyManagement.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/Logins")
 
-    //HTTP://localhost:8080/api/v1/Logins
+//HTTP://localhost:8080/api/v1/Logins
 public class LoginController {
     //DI = Dependency Injection
     @Autowired
@@ -24,7 +22,7 @@ public class LoginController {
 
 
     @GetMapping("")
-    List<Login> getAllLogin() {
+    List<Login> getAllLogins() {
         return repository.findAll();
         //Using H2 Database to store data locally
         //Send Request Using Postman
@@ -36,12 +34,12 @@ public class LoginController {
         Optional<Login> foundLogin = repository.findById(id);
         if (foundLogin.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Query login successfully", foundLogin)
+                    new ResponseObject("ok", "Query Login successfully", foundLogin)
                     //You can replace "ok" with your defined "error code"
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Cannot find login with id= " + id, "")
+                    new ResponseObject("failed", "Cannot find Login with id= " + id, "")
             );
         }
     }
@@ -50,30 +48,29 @@ public class LoginController {
     @PostMapping("/insertLogin")
     ResponseEntity<ResponseObject> insertLogin(@RequestBody Login newLogin) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert login Successfully", repository.save(newLogin))
+                new ResponseObject("ok", "Insert Login Successfully", repository.save(newLogin))
         );
     }
 
-    @PostMapping("/insert")
-    ResponseEntity<ResponseObject> checkLogin(@RequestBody Login newLogin) { //Check if LoginID is duplicate or not
-        List<Login> foundEmployee = repository.findByLoginID(newLogin.getLoginID().trim()
-        );
-        if (foundEmployee.size() > 0) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "Login name already taken", "")
-            );
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert login Successfully", repository.save(newLogin))
-        );
-    }
+   @PostMapping("/insert")
+   ResponseEntity<ResponseObject> checkLogin(@RequestBody Login newLogin) { //Check if LoginID is duplicate or not
+       List<Login> foundLogin = repository.findByid(newLogin.getId());
+       if (foundLogin.size() > 0) {
+           return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                   new ResponseObject("failed", "Login name already taken", "")
+           );
+       }
+       return ResponseEntity.status(HttpStatus.OK).body(
+               new ResponseObject("ok", "Insert Login Successfully", repository.save(newLogin))
+       );
+   }
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateLogin(@RequestBody Login newLogin, @PathVariable Long id) {
         Login updatedLogin = repository.findById(id).map(login -> {
-            login.setLoginID(newLogin.getLoginID());
-            login.setEmployeeID(newLogin.getEmployeeID());
+            login.setId(newLogin.getId());
+            login.setEmployee(newLogin.getEmployee());
             login.setPassword(newLogin.getPassword());
             return repository.save(newLogin);
         }).orElseGet(() -> {
@@ -92,11 +89,12 @@ public class LoginController {
         if(exists) {
             repository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete login successfully", "")
+                    new ResponseObject("ok", "Delete Login successfully", "")
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", "Cannot find login to DELETE", "")
+                new ResponseObject("failed", "Cannot find Login to DELETE", "")
         );
     }
 }
+

@@ -1,104 +1,112 @@
 package com.System.PharmacyManagement.models;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
+
+
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name="Drug")
 public class Drug {
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "drug_sequence",
-			sequenceName = "drug_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "drug_sequence"
-	)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @SequenceGenerator(
+            name = "drug_sequence",
+            sequenceName = "drug_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "drug_sequence"
+    )
+    private long id;
+    //@Column(nullable = false)
+    private String drugName;
+    //@Column(nullable = false)
+    private Date manufacturingDate;
+    //@Column(nullable = false)
+    private Date expiredDate;
+    //@Column(nullable = false)
+    private String type;
+    private int price;
 
-	private String drugID;
-	private String drugsupplierID;
-	private String drugName;
-	private String manufacturingDate;
-	private String expiredDate;
-	private String type;
-	private float price;
+
+    @ManyToOne
+    @JoinColumn(name = "drugSupplierID", nullable = true)
+    private DrugSupplier drugSupplier;
 
 
-	public Drug() {
-	}
 
-	public Drug(String drugID, String drugsupplierID, String drugName, String manufacturingDate, String expiredDate, String type, float price) {
-		this.drugID = drugID;
-		this.drugsupplierID = drugsupplierID;
-		this.drugName = drugName;
-		this.manufacturingDate = manufacturingDate;
-		this.expiredDate = expiredDate;
-		this.type = type;
-		this.price = price;
-	}
-public Long getId() {
-		return id;
-	}
+    public Drug(long id, String drugName, Date manufacturingDate, Date expiredDate, String type, int price, DrugSupplier drugSupplier) {
+        this.id = id;
+        this.drugName = drugName;
+        this.manufacturingDate = manufacturingDate;
+        this.expiredDate = expiredDate;
+        this.type = type;
+        this.price = price;
+        this.drugSupplier = drugSupplier;
+    }
 
-public void setId(Long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setDrugID(String drugID) {
-		this.drugID = drugID;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setDrugsupplierID(String drugsupplierID) {
-		this.drugsupplierID = drugsupplierID;
-	}
+    public String getDrugName() {
+        return drugName;
+    }
 
-	public void setDrugName(String drugName) {
-		this.drugName = drugName;
-	}
+    public void setDrugName(String drugName) {
+        this.drugName = drugName;
+    }
 
-	public void setManufacturingDate(String manufacturingDate) {
-		this.manufacturingDate = manufacturingDate;
-	}
+    public Date getManufacturingDate() {
+        return manufacturingDate;
+    }
 
-	public void setExpiredDate(String expiredDate) {
-		this.expiredDate = expiredDate;
-	}
+    public void setManufacturingDate(Date manufacturingDate) {
+        this.manufacturingDate = manufacturingDate;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public Date getExpiredDate() {
+        return expiredDate;
+    }
 
-	public void setPrice(float price) {
-		this.price = price;
-	}
+    public void setExpiredDate(Date expiredDate) {
+        this.expiredDate = expiredDate;
+    }
 
-public String getDrugID() {
-	return drugID;
-}
-public String getDrugSupplierID() {
-	return drugsupplierID;
-}
-public String  getDrugName() {
-	return drugName;
-}
-public String getManufacturingDate() {
-	return manufacturingDate;
-}
-public String getExpiredDate() {
-	return expiredDate;
-}
-public String getType() {
-	return type;
-}
-public float getPrice() {
-	return price;
-}
+    public String getType() {
+        return type;
+    }
 
-	@Override
-	public String toString(){
-		return "Drug{" + "Id: "+ id + ", Drug ID: " + drugID +", Drug SupplierID: "+ drugsupplierID +", Drug Name: "+ drugName +", Manufacturing Date: "+ manufacturingDate + ", Expired Date "+ expiredDate +", Type: "+ type +", Price "+ price +"}";
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public DrugSupplier getDrugSupplier() {
+        return drugSupplier;
+    }
+
+    public void setDrugSupplier(DrugSupplier drugSupplier) {
+        this.drugSupplier = drugSupplier;
+    }
 }

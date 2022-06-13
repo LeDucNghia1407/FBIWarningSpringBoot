@@ -1,69 +1,64 @@
 package com.System.PharmacyManagement.models;
 
+
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "Login")
 public class Login {
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "login_sequence",
-			sequenceName = "login_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "login_sequence"
-	)
-	private Long id;
 
-	private String loginID;
-	private String employeeID;
-	private String password;
+    @Id
+    @SequenceGenerator(
+            name = "login_sequence",
+            sequenceName = "login_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "login_sequence"
+    )
+    @Column(name = "id", nullable = false)
+    private long id;
+    private String password;
 
-	public Login() {
-	}
+    @OneToOne
+    @JoinColumn(name = "employeeID", nullable = true)
+    private Employee employee;
 
-	public Login(String loginID, String employeeID, String password) {
-		this.loginID = loginID;
-		this.employeeID = employeeID;
-		this.password = password;
-	}
+    public Login(long id, String password, Employee employee) {
+        this.id = id;
+        this.password = password;
+        this.employee = employee;
+    }
 
-public Long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setLoginID(String loginID) {
-		this.loginID = loginID;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setEmployeeID(String employeeID) {
-		this.employeeID = employeeID;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public Employee getEmployee() {
+        return employee;
+    }
 
-	public String getLoginID() {
-	return loginID;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 }
-public String getEmployeeID() {
-	return employeeID;
-}
-public String getPassword() {
-	return password;
-}
-
-	@Override
-	public String toString(){
-		return "Login{" + "Id: "+ id + ", Client Name: " +loginID +", EmployeeId: "+ employeeID+", Password: "+ password+"}";
-	}
-}
-

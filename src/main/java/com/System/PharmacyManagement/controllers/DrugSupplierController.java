@@ -1,9 +1,8 @@
 package com.System.PharmacyManagement.controllers;
 
 
-import com.System.PharmacyManagement.models.DrugSupplier;
-import com.System.PharmacyManagement.models.ResponseObject;
-import com.System.PharmacyManagement.repositories.DrugSupplierRepository;
+import com.System.PharmacyManagement.models.*;
+import com.System.PharmacyManagement.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/DrugSuppliers")
 
-    //HTTP://localhost:8080/api/v1/DrugSuppliers
+//HTTP://localhost:8080/api/v1/DrugSuppliers
 public class DrugSupplierController {
     //DI = Dependency Injection
     @Autowired
@@ -35,52 +34,51 @@ public class DrugSupplierController {
         Optional<DrugSupplier> foundDrugSupplier = repository.findById(id);
         if (foundDrugSupplier.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Query drug supplier successfully", foundDrugSupplier)
+                    new ResponseObject("ok", "Query DrugSupplier successfully", foundDrugSupplier)
                     //You can replace "ok" with your defined "error code"
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Cannot find drug supplier with id= " + id, "")
+                    new ResponseObject("failed", "Cannot find DrugSupplier with id= " + id, "")
             );
         }
     }
 
-    //Insert new Drug Supplier with POST method
+    //Insert new DrugSupplier with POST method
     @PostMapping("/insertDrugSupplier")
     ResponseEntity<ResponseObject> insertDrugSupplier(@RequestBody DrugSupplier newDrugSupplier) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert drug store Successfully", repository.save(newDrugSupplier))
+                new ResponseObject("ok", "Insert DrugSupplier Successfully", repository.save(newDrugSupplier))
         );
     }
 
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject> checkDrugSupplier(@RequestBody DrugSupplier newDrug) { //Check if Drug SupplierID is duplicate or not
-        List<DrugSupplier> foundDrugSupplier = repository.findBydrugSupplierID(newDrug.getDrugSupplierID().trim()
-        );
+    ResponseEntity<ResponseObject> checkDrugSupplier(@RequestBody DrugSupplier newDrugSupplier) { //Check if DrugSupplierID is duplicate or not
+        List<DrugSupplier> foundDrugSupplier = repository.findByid((newDrugSupplier.getId()));
         if (foundDrugSupplier.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("failed", "Drug supplier name already taken", "")
+                    new ResponseObject("failed", "DrugSupplier name already taken", "")
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert drug supllier Successfully", repository.save(newDrug))
+                new ResponseObject("ok", "Insert DrugSupplier Successfully", repository.save(newDrugSupplier))
         );
     }
 
     //Update, Upsert = update if found, otherwise insert
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateDrugSupplier(@RequestBody DrugSupplier newDrugSupplier, @PathVariable Long id) {
-        DrugSupplier updatedDrugSupplier = repository.findById(id).map(drugSupplier -> {
-            drugSupplier.setDrugSupplierID(newDrugSupplier.getDrugSupplierID());
-            drugSupplier.setName(newDrugSupplier.getName());
-            drugSupplier.setAddress(newDrugSupplier.getAddress());
-            return repository.save(drugSupplier);
+        DrugSupplier updatedDrugSupplier = repository.findById(id).map(DrugSupplier -> {
+            DrugSupplier.setId(newDrugSupplier.getId());
+            DrugSupplier.setName(newDrugSupplier.getName());
+            DrugSupplier.setAddress(newDrugSupplier.getAddress());
+            return repository.save(DrugSupplier);
         }).orElseGet(() -> {
             newDrugSupplier.setId(id);
             return repository.save(newDrugSupplier);
         });
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Update drug supplier Successfully", updatedDrugSupplier)
+                new ResponseObject("ok", "Update DrugSupplier Successfully", updatedDrugSupplier)
         );
     }
 
@@ -91,11 +89,12 @@ public class DrugSupplierController {
         if(exists) {
             repository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete drug supplier successfully", "")
+                    new ResponseObject("ok", "Delete DrugSupplier successfully", "")
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", "Cannot find drug supplier to DELETE", "")
+                new ResponseObject("failed", "Cannot find DrugSupplier to DELETE", "")
         );
     }
 }
+

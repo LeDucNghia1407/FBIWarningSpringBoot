@@ -1,80 +1,81 @@
 package com.System.PharmacyManagement.models;
 
-import jdk.jfr.Enabled;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "drugStore")
 public class DrugStore {
-	@Id
-	@Column(name = "id", nullable = false)
-	@SequenceGenerator(
-			name = "drugStore_sequence",
-			sequenceName = "drugStore_sequence",
-			allocationSize = 1 //increment by 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator =  "drugStore_sequence"
-	)
-	private Long id;
 
-	private String drugStoreID;
-	private String drugSupplierID;
-	private String name;
-	private String address;
+    @Id
+    @Column(name = "id", nullable = false)
+    @SequenceGenerator(
+            name = "drugStore_sequence",
+            sequenceName = "drugStore_sequence",
+            allocationSize = 1 //increment by 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator =  "drugStore_sequence"
+    )
+    private long id;
 
-	public DrugStore() {
-	}
+    //@Column(nullable = false)
+    private String name;
+    //@Column(nullable = false)
+    private String address;
 
-public DrugStore(String drugStoreID, String drugSupplierID, String name, String address) {
-		this.drugStoreID = drugStoreID;
-		this.drugSupplierID = drugSupplierID;
-		this.name = name;
-		this.address = address;
-}
 
-public Long getId() {
-		return id;
-}
+    @ManyToOne
+    @JoinColumn(name = "drugSupplierID",nullable = true)
+    private DrugSupplier drugSupplier;
 
-public void setId(Long id) {
-		this.id = id;
-}
 
-	public void setDrugStoreID(String drugStoreID) {
-		this.drugStoreID = drugStoreID;
-	}
 
-	public void setDrugSupplierID(String drugSupplierID) {
-		this.drugSupplierID = drugSupplierID;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public DrugStore(long id, String name, String address, DrugSupplier drugSupplier) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.drugSupplier = drugSupplier;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String getDrugStoreID() {
-	return drugStoreID;
-}
-public String getDrugSupplierID() {
-	return drugSupplierID;
-}
-public String getName() {
-	return name;
-}
-public String getAddress() {
-	return address;
-}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-@Override
-	public String toString(){
-		return "Drug Store{" + "Id: "+ id + ", Drug Store ID: " + drugStoreID + ", Drug Supplier ID: " + drugSupplierID + ", Name: " + name + ", Address: " + address +"}";
-	}
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public DrugSupplier getDrugSupplier() {
+        return drugSupplier;
+    }
+
+    public void setDrugSupplier(DrugSupplier drugSupplier) {
+        this.drugSupplier = drugSupplier;
+    }
 }

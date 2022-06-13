@@ -1,9 +1,8 @@
 package com.System.PharmacyManagement.controllers;
 
 
-import com.System.PharmacyManagement.models.Client;
-import com.System.PharmacyManagement.models.ResponseObject;
-import com.System.PharmacyManagement.repositories.ClientRepository;
+import com.System.PharmacyManagement.models.*;
+import com.System.PharmacyManagement.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/Clients")
 
-    //HTTP://localhost:8080/api/v1/Clients //Go to internet or Postman
+//HTTP://localhost:8080/api/v1/Clients
 public class ClientController {
     //DI = Dependency Injection
     @Autowired
@@ -55,7 +54,7 @@ public class ClientController {
 
     @PostMapping("/insert")
     ResponseEntity<ResponseObject> checkClient(@RequestBody Client newClient) { //Check if clientID is duplicate or not
-        List<Client> foundClient = repository.findByclientID(newClient.getClientID().trim()
+        List<Client> foundClient = repository.findByid((newClient.getId())
         );
         if (foundClient.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
@@ -71,8 +70,8 @@ public class ClientController {
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateClient(@RequestBody Client newClient, @PathVariable Long id) {
         Client updatedClient = repository.findById(id).map(client -> {
-            client.setClientID(newClient.getClientID());
-            client.setEmployeeID(newClient.getEmployeeID());
+            client.setId(newClient.getId());
+            client.setEmployee(newClient.getEmployee());
             return repository.save(client);
         }).orElseGet(() -> {
             newClient.setId(id);
@@ -98,3 +97,4 @@ public class ClientController {
         );
     }
 }
+

@@ -1,16 +1,12 @@
 package com.System.PharmacyManagement.controllers;
 
 
-import com.System.PharmacyManagement.models.Client;
-import com.System.PharmacyManagement.models.Drug;
-import com.System.PharmacyManagement.models.ResponseObject;
-import com.System.PharmacyManagement.repositories.ClientRepository;
-import com.System.PharmacyManagement.repositories.DrugRepository;
+import com.System.PharmacyManagement.models.*;
+import com.System.PharmacyManagement.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/Drugs")
 
-    //HTTP://localhost:8080/api/v1/Drugs
+//HTTP://localhost:8080/api/v1/Drugs
 public class DrugController {
     //DI = Dependency Injection
     @Autowired
@@ -38,12 +34,12 @@ public class DrugController {
         Optional<Drug> foundDrug = repository.findById(id);
         if (foundDrug.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Query drug successfully", foundDrug)
+                    new ResponseObject("ok", "Query Drug successfully", foundDrug)
                     //You can replace "ok" with your defined "error code"
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Cannot find drug with id= " + id, "")
+                    new ResponseObject("failed", "Cannot find Drug with id= " + id, "")
             );
         }
     }
@@ -52,13 +48,13 @@ public class DrugController {
     @PostMapping("/insertDrug")
     ResponseEntity<ResponseObject> insertDrug(@RequestBody Drug newDrug) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert drug Successfully", repository.save(newDrug))
+                new ResponseObject("ok", "Insert Drug Successfully", repository.save(newDrug))
         );
     }
 
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject> checkDrug(@RequestBody Drug newDrug) { //Check if drugID is duplicate or not
-        List<Drug> foundDrug = repository.findBydrugName(newDrug.getDrugID().trim()
+    ResponseEntity<ResponseObject> checkDrug(@RequestBody Drug newDrug) { //Check if DrugID is duplicate or not
+        List<Drug> foundDrug = repository.findByid((newDrug.getId())
         );
         if (foundDrug.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
@@ -66,7 +62,7 @@ public class DrugController {
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert drug Successfully", repository.save(newDrug))
+                new ResponseObject("ok", "Insert Drug Successfully", repository.save(newDrug))
         );
     }
 
@@ -74,8 +70,8 @@ public class DrugController {
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateDrug(@RequestBody Drug newDrug, @PathVariable Long id) {
         Drug updatedDrug = repository.findById(id).map(drug -> {
-            drug.setDrugID(newDrug.getDrugID());
-            drug.setDrugsupplierID(newDrug.getDrugSupplierID());
+            drug.setId(newDrug.getId());
+            drug.setDrugSupplier(newDrug.getDrugSupplier());
             drug.setDrugName(newDrug.getDrugName());
             drug.setManufacturingDate(newDrug.getManufacturingDate());
             drug.setExpiredDate(newDrug.getExpiredDate());
@@ -98,11 +94,11 @@ public class DrugController {
         if(exists) {
             repository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete drug successfully", "")
+                    new ResponseObject("ok", "Delete Drug successfully", "")
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", "Cannot find drug to DELETE", "")
+                new ResponseObject("failed", "Cannot find Drug to DELETE", "")
         );
     }
 }

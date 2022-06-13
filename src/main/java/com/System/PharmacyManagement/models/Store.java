@@ -1,11 +1,18 @@
 package com.System.PharmacyManagement.models;
 
-import javax.persistence.*;
-import java.util.Date;
 
+import lombok.*;
+
+import javax.persistence.*;
+import java.sql.Date;
+
+
+@Data
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "Store")
 public class Store {
+
     @Id
     @SequenceGenerator(
             name = "store_sequence",
@@ -17,73 +24,64 @@ public class Store {
             generator =  "store_sequence"
     )
     @Column(name = "id", nullable = false)
-    private Long id;
+    private long id;
+    //@Column(nullable = false)
+    private Date storeTime;
+    private int drugQuantity;
 
-    private String storeID;
-    private String drugID;
-    private String drugStoreID;
-    private String storeTime;
-    private int quantity;
+    @ManyToOne
+    @JoinColumn(name = "drugID", nullable = true)
+    private Drug drug;
 
-    public Store() {
+    @ManyToOne
+    @JoinColumn(name = "drugStoreID", nullable = true)
+    private DrugStore drugStore;
+
+    public Store(long id, Date storeTime, int drugQuantity, Drug drug, DrugStore drugStore) {
+        this.id = id;
+        this.storeTime = storeTime;
+        this.drugQuantity = drugQuantity;
+        this.drug = drug;
+        this.drugStore = drugStore;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Store(String storeID, String drugID, String drugStoreID, String storeTime, int quantity) {
-        this.storeID = storeID;
-        this.drugID = drugID;
-        this.drugStoreID = drugStoreID;
-        this.storeTime = storeTime;
-        this.quantity = quantity;
-    }
-
-    public void setStoreID(String storeID) {
-        this.storeID = storeID;
-    }
-
-    public void setDrugID(String drugID) {
-        this.drugID = drugID;
-    }
-
-    public void setDrugStoreID(String drugStoreID) {
-        this.drugStoreID = drugStoreID;
-    }
-
-    public void setStoreTime(String storeTime) {
-        this.storeTime = storeTime;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getStoreID(){
-        return storeID;
-    }
-    public String getdrugID(){
-        return drugID;
-    }
-    public String getdrugStoreID(){
-        return drugStoreID;
-    }
-    public String getStoreTime(){
+    public Date getStoreTime() {
         return storeTime;
     }
-    public int getQuantity(){
-        return quantity;
+
+    public void setStoreTime(Date storeTime) {
+        this.storeTime = storeTime;
     }
 
-    @Override
-    public String toString(){
-        return "Manager{" + "Id: "+ id + ", Order ID: " + storeID +", Drug ID: "+ drugID+", Client ID: "+ drugStoreID+", Time: "+ storeTime+", Drug Quantity: "+ quantity+"}";
+    public int getDrugQuantity() {
+        return drugQuantity;
+    }
+
+    public void setDrugQuantity(int drugQuantity) {
+        this.drugQuantity = drugQuantity;
+    }
+
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    public DrugStore getDrugStore() {
+        return drugStore;
+    }
+
+    public void setDrugStore(DrugStore drugStore) {
+        this.drugStore = drugStore;
     }
 }
-
-

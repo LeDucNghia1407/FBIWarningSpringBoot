@@ -1,9 +1,8 @@
 package com.System.PharmacyManagement.controllers;
 
 
-import com.System.PharmacyManagement.models.Employee;
-import com.System.PharmacyManagement.models.ResponseObject;
-import com.System.PharmacyManagement.repositories.EmployeeRepository;
+import com.System.PharmacyManagement.models.*;
+import com.System.PharmacyManagement.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/Employees")
 
-    //HTTP://localhost:8080/api/v1/Employees
+//HTTP://localhost:8080/api/v1/Employees
 public class EmployeeController {
     //DI = Dependency Injection
     @Autowired
@@ -35,12 +34,12 @@ public class EmployeeController {
         Optional<Employee> foundEmployee = repository.findById(id);
         if (foundEmployee.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Query employee successfully", foundEmployee)
+                    new ResponseObject("ok", "Query Employee successfully", foundEmployee)
                     //You can replace "ok" with your defined "error code"
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("failed", "Cannot find employee with id= " + id, "")
+                    new ResponseObject("failed", "Cannot find Employee with id= " + id, "")
             );
         }
     }
@@ -49,21 +48,20 @@ public class EmployeeController {
     @PostMapping("/insertEmployee")
     ResponseEntity<ResponseObject> insertEmployee(@RequestBody Employee newEmployee) {
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert employee Successfully", repository.save(newEmployee))
+                new ResponseObject("ok", "Insert Employee Successfully", repository.save(newEmployee))
         );
     }
 
     @PostMapping("/insert")
-    ResponseEntity<ResponseObject> checkEmployee(@RequestBody Employee newEmployee) { //Check if employeeID is duplicate or not
-        List<Employee> foundEmployee = repository.findByemployeeID(newEmployee.getEmployeeID().trim()
-        );
+    ResponseEntity<ResponseObject> checkEmployee(@RequestBody Employee newEmployee) { //Check if EmployeeID is duplicate or not
+        List<Employee> foundEmployee = repository.findByid((newEmployee.getId()));
         if (foundEmployee.size() > 0) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
                     new ResponseObject("failed", "Employee name already taken", "")
             );
         }
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Insert employee Successfully", repository.save(newEmployee))
+                new ResponseObject("ok", "Insert Employee Successfully", repository.save(newEmployee))
         );
     }
 
@@ -71,14 +69,13 @@ public class EmployeeController {
     @PutMapping("/{id}")
     ResponseEntity<ResponseObject> updateEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
         Employee updatedEmployee = repository.findById(id).map(employee -> {
-            employee.setEmployeeID(newEmployee.getEmployeeID());
-            employee.setDrugStoreID(newEmployee.getDrugStoreID());
-            employee.setManagerID(newEmployee.getManagerBy());
+            employee.setId(newEmployee.getId());
             employee.setName(newEmployee.getName());
-            employee.setEmail(newEmployee.getEmail());
             employee.setPhone(newEmployee.getPhone());
+            employee.setEmail(newEmployee.getEmail());
             employee.setPermission(newEmployee.getPermission());
             employee.setSalary(newEmployee.getSalary());
+            employee.setManager(newEmployee.getManager());
             return repository.save(newEmployee);
         }).orElseGet(() -> {
             newEmployee.setId(id);
@@ -96,11 +93,12 @@ public class EmployeeController {
         if(exists) {
             repository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete employee successfully", "")
+                    new ResponseObject("ok", "Delete Employee successfully", "")
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", "Cannot find employee to DELETE", "")
+                new ResponseObject("failed", "Cannot find Employee to DELETE", "")
         );
     }
 }
+
