@@ -42,8 +42,6 @@ public class Drug {
     @JoinColumn(name = "drugSupplierID", nullable = true)
     private DrugSupplier drugSupplier;
 
-
-
     public Drug(long id, String drugName, Date manufacturingDate, Date expiredDate, String type, int price, DrugSupplier drugSupplier) {
         this.id = id;
         this.drugName = drugName;

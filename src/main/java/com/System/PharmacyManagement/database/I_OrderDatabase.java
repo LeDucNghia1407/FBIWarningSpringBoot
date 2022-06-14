@@ -2,6 +2,9 @@ package com.System.PharmacyManagement.database;
 
 import com.System.PharmacyManagement.models.*;
 import com.System.PharmacyManagement.repositories.*;
+
+import lombok.Data;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import java.sql.Date;
 
+@Data
 @Configuration
 public class I_OrderDatabase {
 

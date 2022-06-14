@@ -25,13 +25,18 @@ public class Employee {
     @Column(name = "id", nullable = false)
     private long id;
     //@Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
     //@Column(nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
     //@Column(nullable = false)
+    @Column(name = "phone", nullable = false)
     private String phone;
     //@Column(nullable = false)
+    @Column(name = "permission")
     private int permission;
+    @Column(name = "salary")
     private int salary;
 
 
@@ -44,8 +49,6 @@ public class Employee {
     @OneToOne
     @JoinColumn(name="managerID")
     private Manager manager;
-
-
 
     public Employee(long id, String name, String email, String phone, int permission, int salary, DrugStore drugStore, Manager manager) {
         this.id = id;

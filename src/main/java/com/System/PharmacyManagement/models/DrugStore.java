@@ -38,8 +38,6 @@ public class DrugStore {
     private DrugSupplier drugSupplier;
 
 
-
-
     public DrugStore(long id, String name, String address, DrugSupplier drugSupplier) {
         this.id = id;
         this.name = name;

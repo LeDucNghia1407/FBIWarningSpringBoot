@@ -37,7 +37,6 @@ public class Orders {
     @JoinColumn(name = "clientID", nullable = true)
     private Client client;
 
-
     public Orders(long id, Date time, int drugQuantity, Drug drug, Client client) {
         this.id = id;
         this.time = time;

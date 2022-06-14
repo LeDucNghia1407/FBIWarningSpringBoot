@@ -30,8 +30,6 @@ public class DrugSupplier {
     //@Column(nullable = false)
     private String address;
 
-
-
     public DrugSupplier(long id, String name, String address) {
         this.id = id;
         this.name = name;

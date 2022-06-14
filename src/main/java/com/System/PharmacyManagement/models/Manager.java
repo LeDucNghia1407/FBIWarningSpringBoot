@@ -31,8 +31,6 @@ public class Manager {
     @JoinColumn(name = "DrugStoreID", nullable = true)
     private DrugStore drugStore;
 
-
-
     public Manager(long id, DrugStore drugStore) {
         this.id = id;
         this.drugStore = drugStore;

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -35,9 +34,6 @@ public class Client {
     @ManyToOne
     @JoinColumn(name = "employeeID", nullable = true)
     private Employee employee;
-
-
-
 
 
     public Client(long id, Employee employee) {

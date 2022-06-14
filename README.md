@@ -21,6 +21,10 @@ Creating Logical and Database for the course Programming Exercise 2022 - Prof. H
   - Edit the schema name in the connection to your schema(in our case is PMSDatabase)
 - Run the Application file in /src/main/java/PharmacyManagermentApplication.java
 
+## RESTful API Documentation via Swagger
+
+Access point: http://localhost:8080/swagger-ui/#/
+
 
 ## API CONTROL(POSTMAN)
 - To connect to Database use this link: http://localhost:8080 which expose the following APIs
