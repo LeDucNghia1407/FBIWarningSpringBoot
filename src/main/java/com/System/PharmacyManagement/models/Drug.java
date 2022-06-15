@@ -2,7 +2,6 @@ package com.System.PharmacyManagement.models;
 
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -11,7 +10,6 @@ import java.sql.Date;
 
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Drug {
@@ -41,7 +39,7 @@ public class Drug {
     @ManyToOne
     @JoinColumn(name = "drugSupplierID", nullable = true)
     private DrugSupplier drugSupplier;
-
+    public Drug() {}
     public Drug(long id, String drugName, Date manufacturingDate, Date expiredDate, String type, int price, DrugSupplier drugSupplier) {
         this.id = id;
         this.drugName = drugName;

@@ -3,13 +3,11 @@ package com.System.PharmacyManagement.models;
 
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Client {
@@ -35,7 +33,7 @@ public class Client {
     @JoinColumn(name = "employeeID", nullable = true)
     private Employee employee;
 
-
+    public Client() {}
     public Client(long id, Employee employee) {
         this.id = id;
         this.employee = employee;

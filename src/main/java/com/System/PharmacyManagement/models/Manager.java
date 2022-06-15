@@ -9,7 +9,6 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Manager {
@@ -30,7 +29,7 @@ public class Manager {
     @OneToOne
     @JoinColumn(name = "DrugStoreID", nullable = true)
     private DrugStore drugStore;
-
+    public Manager() {}
     public Manager(long id, DrugStore drugStore) {
         this.id = id;
         this.drugStore = drugStore;

@@ -2,14 +2,12 @@ package com.System.PharmacyManagement.models;
 
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class DrugSupplier {
@@ -29,7 +27,7 @@ public class DrugSupplier {
     private String name;
     //@Column(nullable = false)
     private String address;
-
+    public DrugSupplier() {}
     public DrugSupplier(long id, String name, String address) {
         this.id = id;
         this.name = name;

@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Orders {
@@ -36,7 +35,7 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "clientID", nullable = true)
     private Client client;
-
+    public Orders() {}
     public Orders(long id, Date time, int drugQuantity, Drug drug, Client client) {
         this.id = id;
         this.time = time;

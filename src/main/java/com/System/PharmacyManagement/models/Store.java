@@ -8,7 +8,6 @@ import java.sql.Date;
 
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Store {
@@ -36,7 +35,7 @@ public class Store {
     @ManyToOne
     @JoinColumn(name = "drugStoreID", nullable = true)
     private DrugStore drugStore;
-
+    public Store() {}
     public Store(long id, Date storeTime, int drugQuantity, Drug drug, DrugStore drugStore) {
         this.id = id;
         this.storeTime = storeTime;

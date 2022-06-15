@@ -2,14 +2,12 @@ package com.System.PharmacyManagement.models;
 
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class DrugStore {
@@ -37,7 +35,7 @@ public class DrugStore {
     @JoinColumn(name = "drugSupplierID",nullable = true)
     private DrugSupplier drugSupplier;
 
-
+    public DrugStore() {}
     public DrugStore(long id, String name, String address, DrugSupplier drugSupplier) {
         this.id = id;
         this.name = name;

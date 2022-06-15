@@ -3,13 +3,11 @@ package com.System.PharmacyManagement.models;
 
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
 @ToString
 @Entity
 public class Login {
@@ -31,7 +29,7 @@ public class Login {
     @OneToOne
     @JoinColumn(name = "employeeID", nullable = true)
     private Employee employee;
-
+    public Login() {}
     public Login(long id, String password, Employee employee) {
         this.id = id;
         this.password = password;
